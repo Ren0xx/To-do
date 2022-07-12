@@ -1,16 +1,14 @@
-import createItem from "./createItem";
+import Item from "./Item";
+import Project from "./Project";
+
 
 const container = document.querySelector(".content");
+const item1 = Item("Do shopping", "Buy something for dinner", [2022, 11, 8], "High");
+const project1 =  Project("My project", "First project");
+const item2 = Item("1", "2", [2022, 11, 8], "Low");
 
+project1.addTodo(item1);
+project1.addTodo(item2);
 
-const item = createItem("Do shopping", "Buy something for dinner", [2022, 11, 8], "High");
-const div = document.createElement("div");
-
-const objValues  = Object.values(item);
-
-for (const value of objValues) {
-    const h3 = document.createElement("h3");
-    h3.textContent = value;
-    div.append(h3);
-}
-container.appendChild(div);
+const todos1 = project1.getTodos()[1].getTitle();
+const todos = project1.getTodos()[0].getTitle();
