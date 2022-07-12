@@ -1,5 +1,4 @@
 body{
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7,14 +6,13 @@ body{
 .project{
     background-color: rgb(197, 166, 166);
     border: 1px solid black;
-    width: auto;
     height: 555px;
     padding-top: 25px;
     padding-bottom: 25px;
 }
 .todo{
     display: grid;
-    grid-template-columns: 80px 100px 40px 20px 20px;
+    grid-template-columns: 100px 40px 20px 20px;
     align-items: center;
     grid-auto-flow: column;
     justify-content: center;
@@ -22,6 +20,27 @@ body{
     background-color: rgb(147, 147, 204);
     padding: 10px;
     gap: 35px;
+    height: auto;
+
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #f1f1f1;
+}
+.collapseBtn{
+    display: flex;
+    border: 1px solid black;
+    background-color: rgb(91, 228, 114. 0.5);
+    padding: 10px;
+    justify-content: space-around;
+    gap: 35px;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+.collapseBtn:hover{
+    background-color: rgb(112, 144, 123);
 }
 .todo *{
     text-align: center;
@@ -29,4 +48,10 @@ body{
 .deleteButton{
     background-color: red;
     color: white;
+}
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
 }

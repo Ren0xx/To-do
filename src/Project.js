@@ -1,7 +1,7 @@
 const Project = (name) => {
     const todosList = [];
     const getName = () => name;
-    const addTodo = (todo) => todosList.push(todo);
+    const addTodo = (...todos) => todos.forEach(todo => todosList.push(todo));
     const removeTodo = (todo) => todosList.filter(item => !todo.includes(item));
     const getTodos = () => todosList;
     
