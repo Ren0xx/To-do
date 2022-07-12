@@ -26,7 +26,11 @@ export default function renderProject(container, project){
         ifCompleted.type = 'checkbox';
         ifCompleted.checked = todo.getCompletion();
 
-        div.append(title, description, date, priority, ifCompleted);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('deleteButton');
+        deleteBtn.textContent = 'X';
+
+        div.append(title, description, date, priority, ifCompleted, deleteBtn);
         projectContainer.appendChild(div);
     }   
 

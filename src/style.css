@@ -1,8 +1,32 @@
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .project{
-    background-color: red;
+    background-color: rgb(197, 166, 166);
     border: 1px solid black;
+    width: auto;
+    height: 555px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 .todo{
+    display: grid;
+    grid-template-columns: 80px 100px 40px 20px 20px;
+    align-items: center;
+    grid-auto-flow: column;
+    justify-content: center;
     border: 1px solid black;
-    background-color: blue;
+    background-color: rgb(147, 147, 204);
+    padding: 10px;
+    gap: 35px;
+}
+.todo *{
+    text-align: center;
+}
+.deleteButton{
+    background-color: red;
+    color: white;
 }
