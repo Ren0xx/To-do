@@ -1,6 +1,9 @@
 import './style.css';
 
-function renderProject(container, project){
+function renderProject(project){
+    const container = document.querySelector(".content");
+    container.replaceChildren();
+
     const projectContainer = document.createElement('div');
     projectContainer.classList.add('project');
 
@@ -9,12 +12,11 @@ function renderProject(container, project){
     for (const todo of todosList) {
         const div = document.createElement('div');
         div.classList.add('todo');
-
         const titleBtn = document.createElement('button');
 
         titleBtn.innerHTML = 
         `
-            <h3>${todo.getTitle()}</h3><h3>${todo.getDate()}
+            <h3>${todo.getTitle()}</h3><h3>${todo.getDate()}</h3>
         `
         titleBtn.classList.add('collapseBtn');
 

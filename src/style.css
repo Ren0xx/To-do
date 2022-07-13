@@ -1,7 +1,17 @@
 body{
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+.sidebar{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    border: 1px solid blue;
+    padding-left: 12px;
+    padding-top: 25px;
+    row-gap: 10px;
 }
 .project{
     background-color: rgb(197, 166, 166);
@@ -17,7 +27,6 @@ body{
     grid-auto-flow: column;
     justify-content: center;
     border: 1px solid black;
-    background-color: rgb(147, 147, 204);
     padding: 10px;
     gap: 35px;
     height: auto;
@@ -54,4 +63,8 @@ body{
     align-items: center;
     justify-content: center;
     column-gap: 50px;
+}
+.addProjectBtn{
+    color: red;
+    background-color: blue;
 }
