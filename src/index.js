@@ -5,7 +5,7 @@ import renderSidebar from "./renderSidebar";
 import './style.css';
 
 export const MAX_PROJECTS = 8;
-export const projects = [];
+export let projects = [];
 // container.classList.add("content");
 
 
@@ -27,3 +27,4 @@ project2.addTodo(item3, item4);
 
 renderProject(defaultProject);
 renderSidebar(projects);
+

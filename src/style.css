@@ -10,12 +10,11 @@ html{
 body{
     display: grid;
     grid-template-columns: 1fr 6fr;  
-    }
+    /* filter: blur(2px); */
+}
 .sidebar{
     display: flex;
     flex-flow: column wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
     height: 90vh;
     background-color: #c4a5a5;
     padding-left: 12px;
@@ -86,6 +85,10 @@ body{
     align-items: center;
     justify-content: center;
     column-gap: 50px;
+}
+.content form{
+    align-self: flex-start;
+    justify-self: flex-start;
 }
 .addProjectBtn{
     color: red;

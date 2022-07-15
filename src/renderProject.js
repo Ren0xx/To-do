@@ -10,7 +10,7 @@ function renderProject(project) {
 
   const todosList = project.getTodos();
   if (todosList.length === 0) {
-    projectContainer.innerHTML = `<h2>No todos yet...</h2>`;
+    projectContainer.innerHTML = `<h2 style='text-align:center';>No todos yet...</h2>`;
   } else {
     for (const todo of todosList) {
       const div = document.createElement("div");
