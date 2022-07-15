@@ -1,8 +1,8 @@
 const Project = (name) => {
-    const todosList = [];
+    let todosList = [];
     const getName = () => name;
     const addTodo = (...todos) => todos.forEach(todo => todosList.push(todo));
-    const removeTodo = (todo) => todosList.filter(item => !todo.includes(item));
+    const removeTodo = (todo) => todosList = todosList.filter(item => item !== todo);
     const getTodos = () => todosList;
     
     return { getName, getTodos, addTodo, removeTodo};

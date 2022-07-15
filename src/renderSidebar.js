@@ -7,10 +7,10 @@ export default function renderSidebar(projects){
     const sidebar = document.querySelector(".sidebar");
     sidebar.replaceChildren();
     sidebar.classList.add("sidebar");
-
+    sidebar.innerHTML = `<h2 class="sidebar-header"> Your Projects </h2>`;
     projects.forEach(project => {
         const container = document.createElement("div");
-        const projectBtn = document.createElement("button");
+        const projectBtn = document.createElement("span");
         const removeBtn = document.createElement("button");
 
         projectBtn.textContent = `${project.getName()}`;
@@ -23,7 +23,6 @@ export default function renderSidebar(projects){
             removeProject(project, projects);
         }
 
-        container.dataset.id = projects.length;
         container.append(projectBtn, removeBtn);
         sidebar.appendChild(container);
     });
@@ -31,12 +30,15 @@ export default function renderSidebar(projects){
     const addProjectBtn = document.createElement("button");
     addProjectBtn.textContent = "Add New Project";
     addProjectBtn.classList.add("addProjectBtn");
+    // addProjectBtn.onclick = () => {
+    //     addProject();
+    // }
     
     //show how many projects are left to create
     const howManyProjects = projects.length;
     const paragraph = document.createElement("p");
     paragraph.textContent = `Projects: ${howManyProjects}/${MAX_PROJECTS}`;
-    paragraph.classList.add("sidebar-projectsLength")
+    paragraph.classList.add("sidebar-projectsLength");
     
     sidebar.append(addProjectBtn);
     sidebar.append(paragraph);

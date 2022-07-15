@@ -16,13 +16,14 @@ const item4 = Item("Help someone", "Buy something for dinner", [2022, 11, 8], "H
 
 const defaultProject = Project("My project1");
 const project2 = Project("My project2");
+const test3 = Project("Hey");
 
 projects.push(defaultProject);
 projects.push(project2);
+projects.push(test3)
 
 defaultProject.addTodo(item1, item2, item3);
 project2.addTodo(item3, item4);
 
-renderSidebar(projects);
 renderProject(defaultProject);
 renderSidebar(projects);

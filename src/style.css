@@ -1,22 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 html{
     margin: 0 ;
     padding: 0;
     height: 100vh;
 }
+*{
+    font-family: 'Roboto', sans-serif;
+}
 body{
     display: grid;
     grid-template-columns: 1fr 6fr;  
-}
+    }
 .sidebar{
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
     align-items: flex-start;
     height: 90vh;
-    background-color: #f1f1f1;
+    background-color: #c4a5a5;
     padding-left: 12px;
     padding-top: 25px;
     row-gap: 10px;
+}
+.sidebar div button{
+    margin: 5px;
+    padding: 10px;
+}
+.sidebar-header{
+    font-size: 25px;
+}
+.sidebar span{ 
+    cursor: pointer;
+    border: 1px solid rgb(178, 216, 8);
+    padding: 10px;
+    background-color: white;
 }
 .project{
     background-color: rgb(197, 166, 166);
@@ -24,6 +41,8 @@ body{
     height: 555px;
     padding-top: 25px;
     padding-bottom: 25px;
+    font-size: 12px;
+    width: 325px;
 }
 .todo{
     display: grid;
@@ -45,7 +64,6 @@ body{
 .collapseBtn{
     display: flex;
     border: 1px solid black;
-    background-color: rgb(91, 228, 114. 0.5);
     padding: 10px;
     justify-content: space-around;
     gap: 35px;
