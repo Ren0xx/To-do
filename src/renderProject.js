@@ -1,4 +1,5 @@
 import './style.css';
+import { formatDistance } from 'date-fns';
 
 function renderProject(project){
     const container = document.querySelector(".content");
@@ -14,9 +15,14 @@ function renderProject(project){
         div.classList.add('todo');
         const titleBtn = document.createElement('button');
 
+        const timeLeft = formatDistance(
+            todo.getDate(),
+            new Date(),
+            );
+
         titleBtn.innerHTML = 
         `
-            <h3>${todo.getTitle()}</h3><h3>${todo.getDate()}</h3>
+            <h3>${todo.getTitle()}</h3><h3>${timeLeft} left</h3>
         `
         titleBtn.classList.add('collapseBtn');
 

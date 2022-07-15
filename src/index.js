@@ -11,7 +11,7 @@ export const projects = [];
 
 const item1 = Item("Do shopping", "Buy something for dinner", [2022, 11, 8], "High");
 const item2 = Item("1", "Buy something for dinner", [2022, 11, 8], "Low");
-const item3 = Item("Make bed", "Buy something for dinner", [2022, 5, 5], "Low");
+const item3 = Item("Make bed", "Buy something for dinner", [2022, 8, 5], "Low");
 const item4 = Item("Help someone", "Buy something for dinner", [2022, 11, 8], "High");
 
 const defaultProject = Project("My project1");
