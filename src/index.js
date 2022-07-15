@@ -4,10 +4,10 @@ import { renderProject } from "./renderProject";
 import renderSidebar from "./renderSidebar";
 import './style.css';
 
-const MAX_PROJECTS = 8;
+export const MAX_PROJECTS = 8;
+export const projects = [];
 // container.classList.add("content");
 
-export const projects = [];
 
 const item1 = Item("Do shopping", "Buy something for dinner", [2022, 11, 8], "High");
 const item2 = Item("1", "Buy something for dinner", [2022, 11, 8], "Low");
@@ -25,3 +25,4 @@ project2.addTodo(item3, item4);
 
 renderSidebar(projects);
 renderProject(defaultProject);
+renderSidebar(projects);

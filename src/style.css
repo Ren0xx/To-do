@@ -1,14 +1,19 @@
+html{
+    margin: 0 ;
+    padding: 0;
+    height: 100vh;
+}
 body{
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 1fr 6fr;  
 }
 .sidebar{
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
     align-items: flex-start;
-
-    border: 1px solid blue;
+    height: 90vh;
+    background-color: #f1f1f1;
     padding-left: 12px;
     padding-top: 25px;
     row-gap: 10px;
@@ -67,4 +72,8 @@ body{
 .addProjectBtn{
     color: red;
     background-color: blue;
+}
+.sidebar-projectsLength{
+    margin-top: auto;
+    font-size: 1.25em;
 }
