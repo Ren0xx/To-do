@@ -1,5 +1,7 @@
 import "./style.css";
 import { formatDistance } from "date-fns";
+import Swal from "sweetalert2";
+
 
 function renderProject(project) {
   const container = document.querySelector(".content");
@@ -8,9 +10,16 @@ function renderProject(project) {
   const projectContainer = document.createElement("div");
   projectContainer.classList.add("project");
 
+  const heading = document.createElement("h3");
+  heading.textContent = `Project: ${project.getName()}`;
+  heading.classList.add("project-heading");
+
+  projectContainer.appendChild(heading);
+
   const todosList = project.getTodos();
   if (todosList.length === 0) {
-    projectContainer.innerHTML = `<h2 style='text-align:center';>No todos yet...</h2>`;
+    projectContainer.appendChild(heading);
+    projectContainer.innerHTML += `<h2 style='text-align:center';>No todos yet...</h2>`;
   } else {
     for (const todo of todosList) {
       const div = document.createElement("div");
@@ -32,14 +41,41 @@ function renderProject(project) {
 
       const ifCompleted = document.createElement("input");
       ifCompleted.type = "checkbox";
+      ifCompleted.name = "checkbox";
       ifCompleted.checked = todo.getCompletion();
+      // ifCompleted.onchange = (event) => {
+      //   if (event.target.checked) {
+      //     event.target.parentElement.previousSibling.classList.add("blured");
+      //   }
+      //   else{
+      //     event.target.parentElement.previousSibling.classList.removeClass("blured");
+      //   }
+      // }
 
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("deleteButton");
       deleteBtn.textContent = "X";
       deleteBtn.onclick = () => {
-        project.removeTodo(todo);
-        renderProject(project);
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          width: '300px',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Deleted!',
+              'Your todo has been deleted.',
+              'success'
+            )
+            project.removeTodo(todo);
+            renderProject(project);
+          }
+        })
       };
 
       div.append(description, priority, ifCompleted, deleteBtn);

@@ -21,7 +21,25 @@ export default function renderSidebar(projects) {
     removeBtn.textContent = "x";
     removeBtn.classList.add("deleteButton");
     removeBtn.onclick = () => {
-      removeProject(project, projects);
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        width: '350px',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'Your project has been deleted.',
+            'success'
+          )
+          removeProject(project, projects);
+        }
+      })
     };
 
     container.append(projectBtn, removeBtn);
@@ -34,26 +52,25 @@ export default function renderSidebar(projects) {
   addProjectBtn.onclick = () => {
     if (projects.length === MAX_PROJECTS) {
       return;
-    } else {
-      (async () => {
-        const { value: projectName } = await Swal.fire({
-          title: "Input project name",
-          input: "text",
-          inputLabel: "Your project name",
-          showCancelButton: true,
-          inputValidator: (value) => {
-            if (!value) {
-              return "You need to write something!";
-            }
-          },
-        });
-        if (projectName) {
-          const newProject = Project(projectName);
-          projects.push(newProject);
-          renderSidebar(projects);
-        }
-      })();
     }
+    (async () => {
+      const { value: projectName } = await Swal.fire({
+        title: "Input project name",
+        input: "text",
+        inputLabel: "Your project name",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to write something!";
+          }
+        },
+      });
+      if (projectName) {
+        const newProject = Project(projectName);
+        projects.push(newProject);
+        renderSidebar(projects);
+      }
+    })();
   };
 
   //show how many projects are left to create
