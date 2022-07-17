@@ -1,7 +1,9 @@
 import "./style.css";
 import { formatDistance } from "date-fns";
+import { parseISO } from "date-fns";
+import { isBefore } from "date-fns";
 import Swal from "sweetalert2";
-
+import Item from "./Item.js";
 
 function renderProject(project) {
   const container = document.querySelector(".content");
@@ -43,6 +45,9 @@ function renderProject(project) {
       ifCompleted.type = "checkbox";
       ifCompleted.name = "checkbox";
       ifCompleted.checked = todo.getCompletion();
+      ifCompleted.onchange = () => {
+        todo.setCompletion();
+      };
       // ifCompleted.onchange = (event) => {
       //   if (event.target.checked) {
       //     event.target.parentElement.previousSibling.classList.add("blured");
@@ -57,25 +62,21 @@ function renderProject(project) {
       deleteBtn.textContent = "X";
       deleteBtn.onclick = () => {
         Swal.fire({
-          title: 'Are you sure?',
+          title: "Are you sure?",
           text: "You won't be able to revert this!",
-          icon: 'warning',
+          icon: "warning",
           showCancelButton: true,
-          width: '300px',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
+          width: "300px",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire(
-              'Deleted!',
-              'Your todo has been deleted.',
-              'success'
-            )
+            Swal.fire("Deleted!", "Your todo has been deleted.", "success");
             project.removeTodo(todo);
             renderProject(project);
           }
-        })
+        });
       };
 
       div.append(description, priority, ifCompleted, deleteBtn);
@@ -83,8 +84,80 @@ function renderProject(project) {
       projectContainer.appendChild(div);
     }
   }
+  const addTodoBtn = document.createElement("button");
+  addTodoBtn.textContent = "Add new Todo";
+  addTodoBtn.classList.add("addTodoBtn");
+  addTodoBtn.onclick = () => {
+    (async () => {
+      const { value: formValues } = await Swal.fire({
+        title: "Multiple inputs",
+        html:
+          "<label for='swal-input1'>Title: </label>" +
+          '<input id="swal-input1" class="swal2-input"><br>' +
+          "<label for='swal-input2'> Description: </label>" +
+          '<input type="text-area" id="swal-input2" class="swal2-input"> <br>' +
+          '<label for="swal-input3"> Duedate: </label>' +
+          `<input type="date" id="swal-input3" class="swal2-input"> <br>` +
+          '<label for="swal-input4">Priority:  </label>' +
+          '<select name="cars" id="swal-input4" class="swal2-input">' +
+          '<option value="Low">Low</option>' +
+          '<option value="Medium">Medium</option>' +
+          '<option value="High">High</option>' +
+          "</select>",
+        showCancelButton: true,
+        focusConfirm: false,
+        width: "565px",
+        preConfirm: () => {
+          if (
+            isBefore(
+              parseISO(document.getElementById("swal-input3").value),
+              new Date()
+            )
+          ) {
+            Swal.showValidationMessage("The date can't be in the past!");
+          }
+          if (!document.getElementById("swal-input3").value) {
+            Swal.showValidationMessage("The date can't be empty!");
+          }
+          if (document.getElementById("swal-input1").value.length > 20) {
+            Swal.showValidationMessage(
+              "The title can't be longer than 20 characters!"
+            );
+          }
+          if (
+            document.getElementById("swal-input1").value.length === 0 ||
+            document.getElementById("swal-input2").value.length === 0
+          ) {
+            Swal.showValidationMessage("The title/description can't empty!");
+          }
+          if (document.getElementById("swal-input2").value.length > 30) {
+            Swal.showValidationMessage(
+              "The description can't be longer than 30 characters!"
+            );
+          }
+          return [
+            document.getElementById("swal-input1").value,
+            document.getElementById("swal-input2").value,
+            document.getElementById("swal-input3").value,
+            document.getElementById("swal-input4").value,
+          ];
+        },
+      });
+      if (formValues) {
+        const dateInString = formValues[2].split("-");
+        const newTodo = Item(
+          formValues[0],
+          formValues[1],
+          formValues[2].split("-"),
+          formValues[3]
+        );
+        project.addTodo(newTodo);
+        renderProject(project);
+      }
+    })();
+  };
 
-  collapse();
+  projectContainer.appendChild(addTodoBtn);
   container.appendChild(projectContainer);
   collapse();
 }

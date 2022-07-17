@@ -63,6 +63,9 @@ export default function renderSidebar(projects) {
           if (!value) {
             return "You need to write something!";
           }
+          if(value.length > 15){
+            return "You need to write 15 characters at max";
+          }
         },
       });
       if (projectName) {
