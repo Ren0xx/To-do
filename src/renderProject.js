@@ -90,7 +90,7 @@ function renderProject(project) {
   addTodoBtn.onclick = () => {
     (async () => {
       const { value: formValues } = await Swal.fire({
-        title: "Multiple inputs",
+        title: "Create new Todo",
         html:
           "<label for='swal-input1'>Title: </label>" +
           '<input id="swal-input1" class="swal2-input"><br>' +

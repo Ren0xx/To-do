@@ -1,4 +1,8 @@
 const Item = (title, description, dueDate, priority) => {
+    title: title;
+    description: description;
+    dueDate: dueDate;
+    priority: priority;
     let completed = false;
     const getTitle = () => title;
     const getDescription = () => description;
@@ -7,7 +11,7 @@ const Item = (title, description, dueDate, priority) => {
     const setCompletion = () => completed = !completed;
     const getCompletion  = () => completed;
     
-    return {completed, getDate, getTitle, getDescription, getPriority, setCompletion, getCompletion};
+    return {title, description, dueDate, priority, getDate, getTitle, getDescription, getPriority, setCompletion, getCompletion};
 }
 
 export default Item;

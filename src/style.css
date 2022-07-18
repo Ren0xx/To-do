@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 html{
     margin: 0 ;
@@ -18,15 +21,20 @@ button{
 .sidebar{
     display: flex;
     flex-flow: column wrap;
+    justify-content: flex-start;
     height: 90vh;
     background-color: #c4a5a5;
     padding-left: 12px;
     padding-top: 25px;
     row-gap: 10px;
 }
-.sidebar div:hover{
-    display: block;
+/* .sidebar div:focus-visible{
+    outline-offset: 1px;
 }
+.sidebar div:hover {
+    box-shadow: 4px 4px 0 #000;
+    transform: translate(-4px,-4px);
+} */
 .sidebar div button{
     margin: 5px;
     padding: 10px;
@@ -34,7 +42,7 @@ button{
 .sidebar-header{
     font-size: 25px;
 }
-.sidebar span{ 
+.sidebar div span{ 
     cursor: pointer;
     border: 1px solid rgb(178, 216, 8);
     padding: 10px;
@@ -50,10 +58,13 @@ button{
     padding-top: 25px;
     padding-bottom: 25px;
     font-size: 12px;
-    width: 325px;
+    width: 350px;
 }
-.project *{
+.project > div, .project > button {
     font-size: 12px;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 .project-heading{
     color: hsla(249, 78%, 64%, 0.822);
@@ -66,14 +77,15 @@ button{
 } */
 .todo{
     display: grid;
-    grid-template-columns: 100px 40px 20px 20px;
+    grid-template-columns: 100px 40px 30px 30px;
     align-items: center;
     grid-auto-flow: column;
     justify-content: center;
     border: 1px solid black;
     gap: 35px;
-    height: auto;
+    height: 50px;
     font-size: 10px;
+    width: auto;
 
     padding: 0 18px;
     max-height: 0;
@@ -81,7 +93,7 @@ button{
     transition: max-height 0.3s ease-out;
     background-color: #f1f1f1;
 }
-.addTodoBtn{
+.addTodoBtn, .sidebar div span{
     outline: 0;
     display: inline-flex;
     align-items: center;
@@ -96,21 +108,22 @@ button{
     margin-top: auto;
     width: 150px;   
 }
-.addTodoBtn:focus-visible{
+.addTodoBtn:focus-visible, .sidebar div span:focus-visible{
     outline-offset: 1px;
 }
-.addTodoBtn:hover {
+.addTodoBtn:hover, .sidebar div span:hover {
     box-shadow: 4px 4px 0 #000;
     transform: translate(-4px,-4px);
+    background-color: rgb(208, 208, 215);
+
 }
 .collapseBtn{
     display: flex;
     border: 1px solid black;
-    padding: 10px;
     justify-content: space-around;
+    height: 50px;
     gap: 35px;
     width: 100%;
-    height: auto;
     cursor: pointer;
 }
 .collapseBtn:hover{
