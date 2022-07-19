@@ -4,6 +4,8 @@ import { parseISO } from "date-fns";
 import { isBefore } from "date-fns";
 import Swal from "sweetalert2";
 import Item from "./Item.js";
+import {arrayRemove} from "./renderSidebar.js";
+import {projects} from "./initial.js";
 
 function renderProject(project) {
   const container = document.querySelector(".content");
@@ -13,40 +15,37 @@ function renderProject(project) {
   projectContainer.classList.add("project");
 
   const heading = document.createElement("h3");
-  heading.textContent = `Project: ${project.getName()}`;
+  heading.textContent = `Project: ${project.name}`;
   heading.classList.add("project-heading");
 
   projectContainer.appendChild(heading);
 
-  const todosList = project.getTodos();
-  if (todosList.length === 0) {
-    projectContainer.appendChild(heading);
-    projectContainer.innerHTML += `<h2 style='text-align:center';>No todos yet...</h2>`;
-  } else {
+  const todosList = project.todosList;
+  if (todosList.length !== 0) {
     for (const todo of todosList) {
       const div = document.createElement("div");
       div.classList.add("todo");
       const titleBtn = document.createElement("button");
 
-      const timeLeft = formatDistance(todo.getDate(), new Date());
+      const timeLeft = formatDistance(new Date(todo.dueDate), new Date());
 
       titleBtn.innerHTML = `
-                <h3>${todo.getTitle()}</h3><h3>${timeLeft} left</h3>
+                <h3>${todo.title}</h3><h3>${timeLeft} left</h3>
             `;
       titleBtn.classList.add("collapseBtn");
 
       const description = document.createElement("p");
-      description.textContent = todo.getDescription();
+      description.textContent = todo.description;
 
       const priority = document.createElement("h4");
-      priority.textContent = todo.getPriority();
+      priority.textContent = todo.priority;
 
       const ifCompleted = document.createElement("input");
       ifCompleted.type = "checkbox";
       ifCompleted.name = "checkbox";
-      ifCompleted.checked = todo.getCompletion();
+      ifCompleted.checked = todo.completed;
       ifCompleted.onchange = () => {
-        todo.setCompletion();
+        todo.completed = !todo.completed;
       };
       // ifCompleted.onchange = (event) => {
       //   if (event.target.checked) {
@@ -73,7 +72,8 @@ function renderProject(project) {
         }).then((result) => {
           if (result.isConfirmed) {
             Swal.fire("Deleted!", "Your todo has been deleted.", "success");
-            project.removeTodo(todo);
+            project.todosList = arrayRemove(project.todosList, todo);
+            localforage.setItem('myProjectsLS', projects);
             renderProject(project);
           }
         });
@@ -83,6 +83,10 @@ function renderProject(project) {
       projectContainer.appendChild(titleBtn);
       projectContainer.appendChild(div);
     }
+  } else {
+    projectContainer.appendChild(heading);
+    projectContainer.innerHTML += `<h2 style='text-align:center';>No todos yet...</h2>`;
+    
   }
   const addTodoBtn = document.createElement("button");
   addTodoBtn.textContent = "Add new Todo";
@@ -144,14 +148,15 @@ function renderProject(project) {
         },
       });
       if (formValues) {
-        const dateInString = formValues[2].split("-");
         const newTodo = Item(
           formValues[0],
           formValues[1],
           formValues[2].split("-"),
           formValues[3]
         );
-        project.addTodo(newTodo);
+        project.todosList.push(newTodo);
+        localforage.setItem('myProjectsLS', projects);
+        console.log(project);
         renderProject(project);
       }
     })();

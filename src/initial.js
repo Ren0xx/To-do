@@ -17,20 +17,27 @@ const item1 = Item(
 const item2 = Item("1", "Buy something for dinner", [2022, 11, 8], "Low");
 const item3 = Item("Make bed", "Buy something for dinner", [2022, 8, 5], "Low");
 
-const defaultProject = Project("My project1");
+const defaultProject = Project("My First Project");
 projects.push(defaultProject);
-defaultProject.addTodo(item1, item2, item3);
 
-renderProject(defaultProject);
-renderSidebar(projects);
+defaultProject.todosList.push(item1);
+defaultProject.todosList.push(item2);
+defaultProject.todosList.push(item3);
 
-// if (localStorage.getItem("projectsLS")) {
-//   for (const storedProject of (JSON.parse(localStorage.getItem('projectsLS')))) {
-//     const storedName = storedProject.name; 
-//     Object.assign(storedProject, defaultProject);
-//     storedProject.name = storedName;
-//     console.log(storedProject);
-//     projects.push(storedProject);
-//     renderSidebar(projects);
-//   }
-// }
+
+localforage.setDriver(localforage.LOCALSTORAGE);
+localforage.getItem('myProjectsLS').then(function(value) {
+  // This code runs once the value has been loaded
+  renderSidebar(value);
+  renderProject(value[0]);
+  console.log(value);
+}).catch(function(err) {
+  console.log(err);
+  localforage.setItem('myProjectsLS', projects).then(function(data) {
+  renderProject(defaultProject);
+  renderSidebar(projects);
+  });
+});
+
+
+
