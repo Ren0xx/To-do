@@ -46,6 +46,7 @@ function renderProject(project) {
       ifCompleted.checked = todo.completed;
       ifCompleted.onchange = () => {
         todo.completed = !todo.completed;
+        localStorage.setItem("myProjectsLS", JSON.stringify(projects));
       };
       // ifCompleted.onchange = (event) => {
       //   if (event.target.checked) {
@@ -73,7 +74,10 @@ function renderProject(project) {
           if (result.isConfirmed) {
             Swal.fire("Deleted!", "Your todo has been deleted.", "success");
             project.todosList = arrayRemove(project.todosList, todo);
-            localforage.setItem('myProjectsLS', projects);
+            localStorage.setItem('myProjectsLS', JSON.stringify(projects));
+            console.log(projects);
+            console.log('find you');
+
             renderProject(project);
           }
         });
@@ -155,7 +159,7 @@ function renderProject(project) {
           formValues[3]
         );
         project.todosList.push(newTodo);
-        localforage.setItem('myProjectsLS', projects);
+        localStorage.setItem('myProjectsLS', JSON.stringify(projects));
         console.log(project);
         renderProject(project);
       }
