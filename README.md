@@ -2,6 +2,8 @@
 
 ### This To-do app lets you write, organize, and prioritize your tasks. You can create new projects/lists, that contains tasks to do.
 
+[Link to the site](https://ren0xx.github.io/To-do/index.html)
+
 ### On this site you can: 
 * create/remove your own projects
 * add/remove todos to your projects
