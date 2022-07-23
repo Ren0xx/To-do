@@ -34,7 +34,12 @@ export default function renderSidebar(projects) {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire({heightAuto: false, title: "Deleted!", icon: 'success', text: 'Your project has been deleted.'});
+            Swal.fire({
+              heightAuto: false,
+              title: "Deleted!",
+              icon: "success",
+              text: "Your project has been deleted.",
+            });
             projects = arrayRemove(projects, project);
             localStorage.setItem("myProjectsLS", JSON.stringify(projects));
             renderSidebar(projects);
@@ -65,8 +70,8 @@ export default function renderSidebar(projects) {
           if (!value) {
             return "You need to write something!";
           }
-          if (value.length > 15) {
-            return "You need to write 15 characters at max";
+          if (value.length > 20) {
+            return "You need to write 20 characters at max";
           }
         },
       });

@@ -42,20 +42,9 @@ function renderProject(project) {
       const ifCompleted = document.createElement("input");
       ifCompleted.type = "checkbox";
       ifCompleted.checked = todo.completed;
-      ifCompleted.onclick = (event) => {
+      ifCompleted.onclick = () => {
         todo.completed = !todo.completed;
         localStorage.setItem("myProjectsLS", JSON.stringify(projects));
-        if (todo.completed) {
-          event.target.parentElement.previousSibling.classList.add(
-            "w3-grayscale-max"
-          );
-          event.target.parentElement.classList.add("w3-grayscale-max");
-        } else {
-          event.target.parentElement.previousSibling.classList.remove(
-            "w3-grayscale-max"
-          );
-          event.target.parentElement.classList.remove("w3-grayscale-max");
-        }
       };
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("deleteButton");
