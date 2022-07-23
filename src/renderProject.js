@@ -1,11 +1,10 @@
 import "./style.css";
-import { formatDistance } from "date-fns";
-import { parseISO } from "date-fns";
-import { isBefore } from "date-fns";
+import { formatDistance, parseISO, isBefore } from "date-fns";
+
 import Swal from "sweetalert2";
-import Item from "./Item.js";
-import {arrayRemove} from "./renderSidebar.js";
-import {projects} from "./initial.js";
+import Item from "./Item";
+import { arrayRemove } from "./renderSidebar";
+import { projects } from "./initial";
 
 function renderProject(project) {
   const container = document.querySelector(".content");
@@ -20,7 +19,7 @@ function renderProject(project) {
 
   projectContainer.appendChild(heading);
 
-  const todosList = project.todosList;
+  const { todosList } = project;
   if (todosList.length !== 0) {
     for (const todo of todosList) {
       const div = document.createElement("div");
@@ -42,27 +41,29 @@ function renderProject(project) {
 
       const ifCompleted = document.createElement("input");
       ifCompleted.type = "checkbox";
-      ifCompleted.name = "checkbox";
       ifCompleted.checked = todo.completed;
-      ifCompleted.onchange = () => {
+      ifCompleted.onclick = (event) => {
         todo.completed = !todo.completed;
         localStorage.setItem("myProjectsLS", JSON.stringify(projects));
+        if (todo.completed) {
+          event.target.parentElement.previousSibling.classList.add(
+            "w3-grayscale-max"
+          );
+          event.target.parentElement.classList.add("w3-grayscale-max");
+        } else {
+          event.target.parentElement.previousSibling.classList.remove(
+            "w3-grayscale-max"
+          );
+          event.target.parentElement.classList.remove("w3-grayscale-max");
+        }
       };
-      // ifCompleted.onchange = (event) => {
-      //   if (event.target.checked) {
-      //     event.target.parentElement.previousSibling.classList.add("blured");
-      //   }
-      //   else{
-      //     event.target.parentElement.previousSibling.classList.removeClass("blured");
-      //   }
-      // }
-
       const deleteBtn = document.createElement("button");
       deleteBtn.classList.add("deleteButton");
       deleteBtn.textContent = "X";
       deleteBtn.onclick = () => {
         Swal.fire({
           title: "Are you sure?",
+          heightAuto: false,
           text: "You won't be able to revert this!",
           icon: "warning",
           showCancelButton: true,
@@ -72,12 +73,14 @@ function renderProject(project) {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Deleted!", "Your todo has been deleted.", "success");
-            project.todosList = arrayRemove(project.todosList, todo);
-            localStorage.setItem('myProjectsLS', JSON.stringify(projects));
-            console.log(projects);
-            console.log('find you');
+            Swal.fire({
+              heightAuto: false,
+              title: "Your todo has been deleted.",
+              icon: "success",
+            });
 
+            project.todosList = arrayRemove(project.todosList, todo);
+            localStorage.setItem("myProjectsLS", JSON.stringify(projects));
             renderProject(project);
           }
         });
@@ -89,8 +92,8 @@ function renderProject(project) {
     }
   } else {
     projectContainer.appendChild(heading);
-    projectContainer.innerHTML += `<h2 style='text-align:center';>No todos yet...</h2>`;
-    
+    projectContainer.innerHTML +=
+      "<h2 style='text-align:center';>No todos yet...</h2>";
   }
   const addTodoBtn = document.createElement("button");
   addTodoBtn.textContent = "Add new Todo";
@@ -99,13 +102,14 @@ function renderProject(project) {
     (async () => {
       const { value: formValues } = await Swal.fire({
         title: "Create new Todo",
+        heightAuto: false,
         html:
           "<label for='swal-input1'>Title: </label>" +
           '<input id="swal-input1" class="swal2-input"><br>' +
           "<label for='swal-input2'> Description: </label>" +
           '<input type="text-area" id="swal-input2" class="swal2-input"> <br>' +
           '<label for="swal-input3"> Duedate: </label>' +
-          `<input type="date" id="swal-input3" class="swal2-input"> <br>` +
+          '<input type="date" id="swal-input3" class="swal2-input"> <br>' +
           '<label for="swal-input4">Priority:  </label>' +
           '<select name="cars" id="swal-input4" class="swal2-input">' +
           '<option value="Low">Low</option>' +
@@ -159,8 +163,7 @@ function renderProject(project) {
           formValues[3]
         );
         project.todosList.push(newTodo);
-        localStorage.setItem('myProjectsLS', JSON.stringify(projects));
-        console.log(project);
+        localStorage.setItem("myProjectsLS", JSON.stringify(projects));
         renderProject(project);
       }
     })();
@@ -180,7 +183,7 @@ function collapse() {
       if (nextSibling.style.maxHeight) {
         nextSibling.style.maxHeight = null;
       } else {
-        nextSibling.style.maxHeight = button.scrollHeight + "px";
+        nextSibling.style.maxHeight = `${button.scrollHeight}px`;
       }
     });
   });

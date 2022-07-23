@@ -1,13 +1,12 @@
 import "./style.css";
 import { renderProject } from "./renderProject";
-import { projects, MAX_PROJECTS } from "./initial.js";
+import { MAX_PROJECTS } from "./initial.js";
 import Project from "./Project.js";
 import Swal from "sweetalert2";
 
 export default function renderSidebar(projects) {
   const sidebar = document.querySelector(".sidebar");
   sidebar.replaceChildren();
-  sidebar.classList.add("sidebar");
   sidebar.innerHTML = `<h2 class="sidebar-header"> Your Projects </h2>`;
 
   if (projects && projects.length > 0) {
@@ -16,7 +15,7 @@ export default function renderSidebar(projects) {
       const projectBtn = document.createElement("span");
       const removeBtn = document.createElement("button");
 
-      projectBtn.textContent = `${project.name}`;
+      projectBtn.innerHTML = `${project.name}`;
       projectBtn.onclick = () => {
         renderProject(project);
       };
@@ -25,6 +24,7 @@ export default function renderSidebar(projects) {
       removeBtn.onclick = () => {
         Swal.fire({
           title: "Are you sure?",
+          heightAuto: false,
           text: "You won't be able to revert this!",
           icon: "warning",
           showCancelButton: true,
@@ -34,9 +34,8 @@ export default function renderSidebar(projects) {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Deleted!", "Your project has been deleted.", "success");
+            Swal.fire({heightAuto: false, title: "Deleted!", icon: 'success', text: 'Your project has been deleted.'});
             projects = arrayRemove(projects, project);
-            console.log(projects);
             localStorage.setItem("myProjectsLS", JSON.stringify(projects));
             renderSidebar(projects);
             document.querySelector(".content").replaceChildren();
@@ -44,7 +43,7 @@ export default function renderSidebar(projects) {
         });
       };
 
-      container.append(projectBtn, removeBtn);
+      container.append(removeBtn, projectBtn);
       sidebar.appendChild(container);
     });
   }
@@ -58,6 +57,7 @@ export default function renderSidebar(projects) {
     (async () => {
       const { value: projectName } = await Swal.fire({
         title: "Create new project",
+        heightAuto: false,
         input: "text",
         inputLabel: "Your project name",
         showCancelButton: true,
@@ -72,14 +72,11 @@ export default function renderSidebar(projects) {
       });
       if (projectName) {
         projects.push(Project(projectName));
-        console.log(projects);
         localStorage.setItem("myProjectsLS", JSON.stringify(projects));
         renderSidebar(projects);
-        console.log("added project: " + projectName);
       }
     })();
   };
-  //show how many projects are left to create
   const howManyProjects = projects.length || 0;
   const paragraph = document.createElement("p");
   paragraph.textContent = `Projects: ${howManyProjects}/${MAX_PROJECTS}`;
