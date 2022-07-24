@@ -1,4 +1,5 @@
 import "./style.css";
+import Trash from './trash-2.svg';
 import { formatDistance, parseISO, isBefore } from "date-fns";
 
 import Swal from "sweetalert2";
@@ -14,7 +15,7 @@ function renderProject(project) {
   projectContainer.classList.add("project");
 
   const heading = document.createElement("h3");
-  heading.textContent = `Project: ${project.name}`;
+  heading.textContent = `${project.name}`;
   heading.classList.add("project-heading");
 
   projectContainer.appendChild(heading);
@@ -46,9 +47,9 @@ function renderProject(project) {
         todo.completed = !todo.completed;
         localStorage.setItem("myProjectsLS", JSON.stringify(projects));
       };
-      const deleteBtn = document.createElement("button");
-      deleteBtn.classList.add("deleteButton");
-      deleteBtn.textContent = "X";
+      const deleteBtn = document.createElement("img");
+      deleteBtn.classList.add("trashIcon");
+      deleteBtn.src = Trash;
       deleteBtn.onclick = () => {
         Swal.fire({
           title: "Are you sure?",

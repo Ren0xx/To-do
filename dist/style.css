@@ -23,10 +23,6 @@ body {
     resize: none;
 }
 
-body.swal2-height-auto {
-    height: 100% !important;
-}
-
 .site-footer {
     grid-column: 1 / 3;
     display: flex;
@@ -122,14 +118,6 @@ button {
     text-shadow: 1px 1px 3px rgba(66, 68, 90, 1);
 }
 
-.blured {
-    filter: blur(1px);
-}
-
-.notblured {
-    filter: blur(0px);
-}
-
 .todo {
     display: grid;
     grid-template-columns: 100px 40px 30px 30px;
@@ -177,10 +165,6 @@ button {
     text-align: center;
 }
 
-.deleteButton {
-    background-color: red;
-    color: white;
-}
 
 .content {
     display: flex;
@@ -239,7 +223,6 @@ button {
     top: 1px;
 }
 
-
 .deleteButton:hover {
     animation: bounce 3s infinite;
 }
@@ -252,7 +235,11 @@ button {
     border-radius: 8px;
     border: 2px solid #f72020;
 }
-
+.trashIcon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
 @keyframes bounce {
 
     5%,
@@ -288,3 +275,4 @@ button {
         transform: scale(1) rotate(0);
     }
 }
+
